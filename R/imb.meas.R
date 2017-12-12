@@ -37,9 +37,18 @@ L1.meas <- function(group, data, drop=NULL, breaks=NULL, weights, grouping = NUL
  }
  rem <- which(weights<=0)
  if(length(rem)>0){
+   old_names<-names(data)
   data <- data[-rem,]
   weights <- weights[-rem]
   group <- group[-rem]
+  ### Bug fix.  
+  ## if data had only one column, removing the rows in
+  ## data[-rem,] now makes it a vector 
+  ## so we're making it a data frame explicitly here
+  if(!is.data.frame(data)){
+    data<- data.frame(data)
+    names(data) <- old_names
+  }
  }
 
 
@@ -149,9 +158,18 @@ imbalance <- function(group, data, drop=NULL, breaks=NULL, weights, grouping = N
  }
  rem <- which(weights<=0)
  if(length(rem)>0){
+   old_names<-names(data)
   data <- data[-rem,]
   weights <- weights[-rem]
   group <- group[-rem]
+  ### Bug fix.  
+  ## if data had only one column, removing the rows in
+  ## data[-rem,] now makes it a vector 
+  ## so we're making it a data frame explicitly here
+  if(!is.data.frame(data)){
+    data<- data.frame(data)
+    names(data) <- old_names
+  }
  }
 
 
